@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#! /usr/bin/env ruby
+
+IO.popen('j701', 'r+') do |io|
+  io.puts "&gt; (4!:3'')"
+  io.close_write
+  puts io.read.strip
+end</string>
+	<key>fallbackInput</key>
+	<string>line</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^S</string>
+	<key>name</key>
+	<string>Show jconsole Startup Scripts</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>source.ijs</string>
+	<key>uuid</key>
+	<string>B8FCEEE9-0C4A-4DC8-86D8-9C4FC883DE18</string>
+</dict>
+</plist>

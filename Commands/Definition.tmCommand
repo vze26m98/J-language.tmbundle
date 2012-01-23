@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#! /usr/bin/env /usr/bin/ruby
+
+tregex = Regexp.new("^"+ENV["TM_CURRENT_WORD"]+"\t")
+
+definition = String.new
+path = String.new
+basename = String.new
+lineno = String.new
+
+# This basically reads through the entire file
+# but doing so only takes 0.06 seconds of my laptop
+puts '&lt;pre&gt;'
+open("#{ENV["HOME"]}/j602/system/tmtags") do |fid|
+  fid.each_line do |line|
+    if line.index(tregex) == 0
+      fields = line.split("\t")
+      definition = fields[2].match(/(\/\^)(.*)(\$\/;)/)[2]
+      tmp = fields[1].match(/(.+)\/([^\/]+)$/)
+      path = tmp[1]
+      basename = tmp[2]
+      lineno = fields[4].match(/(line:)([0-9]+)/)[2]
+      puts basename+':'+lineno+' -- '+path
+      puts definition+"\n"
+    end
+  end
+end
+puts '&lt;/pre&gt;'
+
+# Well, opens the LAST file found which is lazy! :-)
+fullpath = path+'/'+basename
+`mate -l #{lineno} '#{fullpath}'`</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^l</string>
+	<key>name</key>
+	<string>Locate</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>scope</key>
+	<string>source.ijs</string>
+	<key>uuid</key>
+	<string>03C51EFD-5AFE-42A2-AB8B-B8F42DAA5B4E</string>
+</dict>
+</plist>

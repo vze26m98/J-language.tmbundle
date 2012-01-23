@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>saveActiveFile</string>
+	<key>command</key>
+	<string>#! /usr/bin/env ruby
+
+result = String.new
+
+IO.popen('j701', 'r+') do |io|
+  io.puts $stdin.read
+  io.close_write
+  result = io.read.strip
+end
+
+puts '&lt;pre style="font: Inconsolata"&gt;'
+result.each_line do |line|
+puts line.lstrip
+end
+puts '&lt;/pre&gt;'
+</string>
+	<key>input</key>
+	<string>document</string>
+	<key>keyEquivalent</key>
+	<string>@r</string>
+	<key>name</key>
+	<string>Run</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>scope</key>
+	<string>source.ijs</string>
+	<key>uuid</key>
+	<string>D7D6D760-0113-4857-A4A6-4115D0749F0D</string>
+</dict>
+</plist>

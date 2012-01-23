@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+require ENV['TM_SUPPORT_PATH'] + "/lib/exit_codes.rb"
+
+
+line = ENV["TM_CURRENT_LINE"]
+index = ENV["TM_LINE_INDEX"].to_i
+lookup = {  "=" =&gt; "d000.htm",
+            "&lt;" =&gt; "d010.htm",
+            "&gt;" =&gt; "d020.htm",
+            "_" =&gt; "d030.htm",
+            "+" =&gt; "d100.htm",
+            "*" =&gt; "d110.htm",
+            "-" =&gt; "d120.htm",
+            "%" =&gt; "d130.htm",
+            "^" =&gt; "d200.htm",
+            "$" =&gt; "d210.htm",
+            "~" =&gt; "d220v.htm",
+            "|" =&gt; "d230.htm",
+            "." =&gt; "d300.htm",
+            ":" =&gt; "d310v.htm",
+            "," =&gt; "d320.htm",
+            ";" =&gt; "d330.htm",
+            "#" =&gt; "d400.htm",
+            "!" =&gt; "d410.htm",
+            "/" =&gt; "d420.htm",
+            "\\" =&gt; "d430.htm",
+            "[" =&gt; "d500.htm",
+            "]" =&gt; "d500.htm",
+            "{" =&gt; "d520.htm",
+            "}" =&gt; "d530n.htm",
+            "\"" =&gt; "d600n.htm",
+            "`" =&gt; "d610.htm",
+            "@" =&gt; "d620.htm",
+            "&amp;" =&gt; "d630n.htm",
+            "?" =&gt; "d640.htm",
+            
+            "=." =&gt; "d001.htm",
+            "&lt;." =&gt; "d011.htm",
+            "&gt;." =&gt; "d021.htm",
+            "_." =&gt; "d031.htm",
+            "+." =&gt; "d101.htm",
+            "*." =&gt; "d111.htm",
+            "-." =&gt; "d121.htm",
+            "%." =&gt; "d131.htm",
+            "^." =&gt; "d201.htm",
+            "$." =&gt; "d211.htm",
+            "~." =&gt; "d221.htm",
+            "|." =&gt; "d231.htm",
+            ".." =&gt; "d301.htm",
+            ":." =&gt; "d311.htm",
+            ",." =&gt; "d321.htm",
+            ";." =&gt; "d331.htm",
+            "#." =&gt; "d401.htm",
+            "!." =&gt; "d411.htm",
+            "/." =&gt; "d421.htm",
+            "\\." =&gt; "d431.htm",
+            "{." =&gt; "d521.htm",
+            "}." =&gt; "d531.htm",
+            "\"." =&gt; "d601.htm",
+            "@." =&gt; "d621.htm",
+            "&amp;." =&gt; "d631.htm",
+            "?." =&gt; "d641.htm",
+            
+            "=:" =&gt; "d001.htm",
+            "&lt;:" =&gt; "d012.htm",
+            "&gt;:" =&gt; "d022.htm",
+            "_:" =&gt; "d032.htm",
+            "+:" =&gt; "d102.htm",
+            "*:" =&gt; "d112.htm",
+            "-:" =&gt; "d122.htm",
+            "%:" =&gt; "d132.htm",
+            "^:" =&gt; "d202n.htm",
+            "$:" =&gt; "d212.htm",
+            "~:" =&gt; "d222.htm",
+            "|:" =&gt; "d232.htm",
+            ".:" =&gt; "d301.htm",
+            "::" =&gt; "d312.htm",
+            ",:" =&gt; "d322.htm",
+            ";:" =&gt; "d332.htm",
+            "#:" =&gt; "d402.htm",
+            "!:" =&gt; "d412.htm",
+            "/:" =&gt; "d422.htm",
+            "\\:" =&gt; "d432.htm",
+            "[:" =&gt; "d502.htm",
+            "{:" =&gt; "d522.htm",
+            "}:" =&gt; "d532.htm",
+            "\":" =&gt; "d602.htm",
+            "`:" =&gt; "d612.htm",
+            "@:" =&gt; "d622.htm",
+            "&amp;:" =&gt; "d632.htm"
+}
+
+if line[index,1].match(/[.:]/)
+  # I'm on an inflection, back up
+  data = line[index-1,2].match(/[.:=&gt;&lt;+*\-_%^$~|,;#!\/\\\[\]{}"`@&amp;?][.:]?/)
+else   # I'm on the primitive or nonsense
+  if line[index,1].match(/[.:=&gt;&lt;+*\-_%^$~|,;#!\/\\\[\]{}"`@&amp;?]/)
+    # primitive, see if an inflection follows
+    data = line[index,2].match(/[.:=&gt;&lt;+*\-_%^$~|,;#!\/\\\[\]{}"`@&amp;?][.:]?/)
+  end
+end
+
+if data != nil
+  url = "tm-file://" + ENV['HOME'] + "/Applications/j701/addons/docs/help/dictionary/" + lookup[data[0]]
+  TextMate.exit_show_html("&lt;meta http-equiv='Refresh' content='0;URL=#{url}'&gt;")
+  # puts "&lt;meta http-equiv='Refresh' content='0;URL=#{url}'&gt;"
+else
+  TextMate.exit_show_tool_tip("Not found")
+end
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^v</string>
+	<key>name</key>
+	<string>Vocabulary</string>
+	<key>output</key>
+	<string>discard</string>
+	<key>scope</key>
+	<string>source.ijs</string>
+	<key>uuid</key>
+	<string>1DF5812A-559A-47AE-AE96-66389E37C185</string>
+</dict>
+</plist>
